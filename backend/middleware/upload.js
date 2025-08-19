@@ -1,28 +1,33 @@
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Créer les dossiers d'upload s'ils n'existent pas
 const uploadDirs = ['uploads', 'uploads/avatars', 'uploads/materials', 'uploads/presentations'];
 uploadDirs.forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  const fullPath = path.join(__dirname, '..', dir);
+  if (!fs.existsSync(fullPath)) {
+    fs.mkdirSync(fullPath, { recursive: true });
   }
 });
 
 // Configuration du stockage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let uploadPath = 'uploads/';
+    let uploadPath = path.join(__dirname, '..', 'uploads');
     
     // Déterminer le dossier selon le type de fichier
     if (req.route.path.includes('avatar')) {
-      uploadPath += 'avatars/';
+      uploadPath = path.join(uploadPath, 'avatars');
     } else if (req.route.path.includes('material')) {
-      uploadPath += 'materials/';
+      uploadPath = path.join(uploadPath, 'materials');
     } else if (file.mimetype.includes('presentation') || 
                file.originalname.match(/\.(ppt|pptx)$/i)) {
-      uploadPath += 'presentations/';
+      uploadPath = path.join(uploadPath, 'presentations');
     }
     
     cb(null, uploadPath);
@@ -105,5 +110,5 @@ const handleMulterError = (err, req, res, next) => {
   next(err);
 };
 
-module.exports = upload;
-module.exports.handleMulterError = handleMulterError;
+export default upload;
+export { handleMulterError };

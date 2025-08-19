@@ -1,8 +1,12 @@
-const express = require('express');
-const path = require('path');
-const fs = require('fs').promises;
-const auth = require('../middleware/auth');
-const upload = require('../middleware/upload');
+import express from 'express';
+import path from 'path';
+import { promises as fs } from 'fs';
+import { fileURLToPath } from 'url';
+import auth from '../middleware/auth.js';
+import upload from '../middleware/upload.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
@@ -135,4 +139,4 @@ router.get('/info/:filename', auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

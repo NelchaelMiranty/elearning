@@ -1,7 +1,7 @@
-const express = require('express');
-const Message = require('../models/Message');
-const Course = require('../models/Course');
-const auth = require('../middleware/auth');
+import express from 'express';
+import Message from '../models/Message.js';
+import Course from '../models/Course.js';
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -240,4 +240,4 @@ router.delete('/:messageId', auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

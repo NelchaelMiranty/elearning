@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const sessionSchema = new mongoose.Schema({
   course: {
@@ -74,4 +74,4 @@ sessionSchema.index({ course: 1, startTime: -1 });
 sessionSchema.index({ teacher: 1 });
 sessionSchema.index({ isActive: 1 });
 
-module.exports = mongoose.model('Session', sessionSchema);
+export default mongoose.model('Session', sessionSchema);

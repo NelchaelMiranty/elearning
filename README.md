@@ -1,93 +1,161 @@
-# React + Vite
+# E-Learning FJKM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plateforme d'apprentissage en ligne pour l'Université FJKM Ravelojaona avec architecture séparée backend/frontend utilisant ES Modules.
 
-## Backend Node.js + MongoDB
+## Architecture
 
-Le backend est configuré avec:
-- **Express.js** pour l'API REST
-- **MongoDB** avec Mongoose pour la base de données
-- **Socket.IO** pour le chat en temps réel
-- **JWT** pour l'authentification
-- **Multer** pour l'upload de fichiers
-- **Bcrypt** pour le hashage des mots de passe
+- **Backend** : Node.js + Express + MongoDB (ES Modules)
+- **Frontend** : React + Vite + Ant Design
+- **Communication** : REST API + Socket.IO pour le chat temps réel
 
-### Installation et démarrage
+## Installation
 
-1. Installer les dépendances:
+### Installation complète
 ```bash
+npm run install:all
+```
+
+### Installation manuelle
+```bash
+# Dépendances racine
+npm install
+
+# Backend
+cd backend
+npm install
+
+# Frontend  
+cd ../frontend
 npm install
 ```
 
-2. Configurer les variables d'environnement dans `.env`:
-```
+## Configuration
+
+### Backend (.env)
+Créez un fichier `.env` dans le dossier `backend/` :
+
+```env
 MONGODB_URI=mongodb://localhost:27017/elearning-fjkm
 JWT_SECRET=votre_secret_jwt_super_securise
+JWT_EXPIRE=7d
 PORT=5000
 CLIENT_URL=http://localhost:5173
+NODE_ENV=development
+MAX_FILE_SIZE=10485760
 ```
 
-3. Démarrer MongoDB sur votre machine
+## Démarrage
 
-4. Démarrer le serveur backend:
-```bash
-npm run server:dev
-```
-
-5. Démarrer le frontend:
+### Développement (Backend + Frontend)
 ```bash
 npm run dev
 ```
 
-### API Endpoints
+### Séparément
+```bash
+# Backend seulement
+npm run backend:dev
 
-#### Authentification
+# Frontend seulement  
+npm run frontend:dev
+```
+
+### Production
+```bash
+# Backend
+npm run backend:start
+
+# Frontend (build)
+npm run frontend:build
+```
+
+## Structure du projet
+
+```
+├── backend/
+│   ├── models/          # Modèles Mongoose
+│   ├── routes/          # Routes API
+│   ├── middleware/      # Middlewares (auth, upload)
+│   ├── uploads/         # Fichiers uploadés
+│   ├── server.js        # Serveur principal
+│   └── package.json     # Dépendances backend
+├── frontend/
+│   ├── src/            # Code source React
+│   ├── public/         # Fichiers statiques
+│   ├── index.html      # Point d'entrée HTML
+│   └── package.json    # Dépendances frontend
+└── package.json        # Scripts globaux
+```
+
+## Fonctionnalités
+
+### Backend (ES Modules)
+- ✅ API REST avec Express
+- ✅ Authentification JWT
+- ✅ Base de données MongoDB avec Mongoose
+- ✅ Chat temps réel avec Socket.IO
+- ✅ Upload de fichiers avec Multer
+- ✅ Sécurité (Helmet, CORS, Rate Limiting)
+- ✅ Gestion des rôles (étudiant, enseignant, admin)
+
+### Frontend
+- ✅ Interface React avec Ant Design
+- ✅ Routing avec React Router
+- ✅ Chat en temps réel
+- ✅ Gestion des cours et présentations
+- ✅ Upload et visualisation de fichiers
+- ✅ Authentification utilisateur
+
+## API Endpoints
+
+### Authentification
 - `POST /api/auth/register` - Inscription
 - `POST /api/auth/login` - Connexion
 - `GET /api/auth/verify` - Vérifier le token
-- `PUT /api/auth/change-password` - Changer le mot de passe
 
-#### Utilisateurs
+### Utilisateurs
 - `GET /api/users/profile` - Profil utilisateur
 - `PUT /api/users/profile` - Mettre à jour le profil
-- `GET /api/users` - Liste des utilisateurs (admin/teacher)
-- `GET /api/users/:id` - Utilisateur par ID
 
-#### Cours
+### Cours
 - `GET /api/courses` - Liste des cours
-- `POST /api/courses` - Créer un cours (teacher/admin)
-- `GET /api/courses/:id` - Cours par ID
-- `PUT /api/courses/:id` - Mettre à jour un cours
-- `POST /api/courses/:id/enroll` - S'inscrire à un cours
-- `DELETE /api/courses/:id/unenroll` - Se désinscrire
+- `POST /api/courses` - Créer un cours
+- `GET /api/courses/:id` - Détails d'un cours
 
-#### Chat
+### Chat
 - `GET /api/chat/course/:courseId` - Messages d'un cours
 - `POST /api/chat/send` - Envoyer un message
-- `GET /api/chat/conversations` - Conversations privées
 
-#### Fichiers
+### Fichiers
 - `POST /api/files/upload` - Upload de fichier
 - `GET /api/files/download/:filename` - Télécharger un fichier
-- `DELETE /api/files/:filename` - Supprimer un fichier
 
-### Fonctionnalités
+## Technologies utilisées
 
-- ✅ Authentification JWT sécurisée
-- ✅ Gestion des rôles (étudiant, enseignant, admin)
-- ✅ Chat en temps réel avec Socket.IO
-- ✅ Upload et gestion de fichiers
-- ✅ Système de cours complet
-- ✅ Messages privés et publics
-- ✅ Sécurité avec helmet et rate limiting
-- ✅ Validation des données
-- ✅ Gestion d'erreurs complète
+### Backend
+- Node.js (ES Modules)
+- Express.js
+- MongoDB + Mongoose
+- Socket.IO
+- JWT + Bcrypt
+- Multer
+- Helmet + CORS
 
-Currently, two official plugins are available:
+### Frontend
+- React 19
+- Vite
+- Ant Design
+- React Router
+- Socket.IO Client
+- Bootstrap + AOS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Développement
 
-## Expanding the ESLint configuration
+Le projet utilise maintenant **ES Modules** exclusivement :
+- `import/export` au lieu de `require/module.exports`
+- `"type": "module"` dans tous les package.json
+- Configuration adaptée pour Node.js et Vite
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Support
+
+Pour toute question ou problème, contactez l'équipe de développement.

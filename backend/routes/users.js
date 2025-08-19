@@ -1,8 +1,8 @@
-const express = require('express');
-const User = require('../models/User');
-const Course = require('../models/Course');
-const auth = require('../middleware/auth');
-const upload = require('../middleware/upload');
+import express from 'express';
+import User from '../models/User.js';
+import Course from '../models/Course.js';
+import auth from '../middleware/auth.js';
+import upload from '../middleware/upload.js';
 
 const router = express.Router();
 
@@ -175,4 +175,4 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
