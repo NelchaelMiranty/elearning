@@ -65,7 +65,7 @@ router.post('/upload-multiple', auth, upload.array('files', 10), async (req, res
 });
 
 // Télécharger un fichier
-router.get('/download/:filename(*)', auth, async (req, res) => {
+router.get('/download/:filename', auth, async (req, res) => {
   try {
     const filename = req.params.filename;
     const filePath = path.join(__dirname, '../uploads', filename);
@@ -91,7 +91,7 @@ router.get('/download/:filename(*)', auth, async (req, res) => {
 });
 
 // Supprimer un fichier
-router.delete('/:filename(*)', auth, async (req, res) => {
+router.delete('/:filename', auth, async (req, res) => {
   try {
     const filename = req.params.filename;
     const filePath = path.join(__dirname, '../uploads', filename);
@@ -114,7 +114,7 @@ router.delete('/:filename(*)', auth, async (req, res) => {
 });
 
 // Obtenir les informations d'un fichier
-router.get('/info/:filename(*)', auth, async (req, res) => {
+router.get('/info/:filename', auth, async (req, res) => {
   try {
     const filename = req.params.filename;
     const filePath = path.join(__dirname, '../uploads', filename);
