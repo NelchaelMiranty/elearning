@@ -66,7 +66,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/chat", chatRoutes);
-app.use("/api/files", fileRoutes);
+// app.use("/api/files", fileRoutes); // Temporarily commented out to test
 
 // Route de test
 app.get("/api/health", (req, res) => {
